@@ -5,15 +5,16 @@
 
 import sys, os, subprocess, logging, re
 import webbrowser, urlparse, json
-import shelve, gevent, random, string
+import shelve, random, string
 
 from threading import Thread
 
-import lib.requests as requests
-from lib.Socketio import socketio_manage
-from lib.Socketio.server import SocketIOServer
-from lib.Socketio.namespace import BaseNamespace
-from lib.Socketio.mixins import RoomsMixin, BroadcastMixin
+import gevent
+import requests
+from socketio import socketio_manage
+from socketio.server import SocketIOServer
+from socketio.namespace import BaseNamespace
+from socketio.mixins import RoomsMixin, BroadcastMixin
 
 
 # CONSTANTS
@@ -107,14 +108,16 @@ class EasyRtmpdumpNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
 
     if data.has_key("orig"):
       logger.info("Orig detected: %s" % data["orig"])
-      if data["orig"].find("mitele.es/") != -1: # Hack for mitele with PyDownTV
-        try:
-          command = str(pydowntv(data["orig"])['videos'][0]['rtmpd_cmd'][0]).replace("\"", "")
-          logger.info("Hack for mitele & pydowntv. New Command: \n\n%s\n\n" % command)
-          setClipboardData(command)
-          command = command.split()
-          logger.info("Split new Command received: %s" % command)
-        except: pass # Try with command we have... :(
+      try:
+        if data["orig"].find("mitele.es/") != -1: # Hack for mitele with PyDownTV
+          try:
+            command = str(pydowntv(data["orig"])['videos'][0]['rtmpd_cmd'][0]).replace("\"", "")
+            logger.info("Hack for mitele & pydowntv. New Command: \n\n%s\n\n" % command)
+            setClipboardData(command)
+            command = command.split()
+            logger.info("Split new Command received: %s" % command)
+          except: pass # Try with command we have... :(
+      except: pass #orig is a Javascript null
 
     prefs = shelve.open(PREFS_FILE)
     if prefs.has_key("dirpath"):
@@ -126,7 +129,22 @@ class EasyRtmpdumpNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
     except: vDest = "undefined"
     self.send_download_additional_info("destination", _id, vDest)
 
-    proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    # Set correct path for rtmpdump (MAC OS X on local, GNU/Linux installed, Windows not supported yet)
+    if sys.platform == "linux" or sys.platform == "linux2":
+      pass # command[0] = "rtmpdump"
+    elif sys.platform == "darwin": #MACOS
+      command[0] = "./rtmpdump"
+    else:
+      logger.error("Windows not suppported yet!")
+      return False
+
+    try:
+      proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    except OSError:
+      logger.error("rtmpdump not installed")
+      self.broadcast_event('error', "rtmpdump not installed")
+      return False
+
     current_downloads.append({_id:proc})
 
     def sendRtmpdumpProcess(a):

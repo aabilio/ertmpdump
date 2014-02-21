@@ -234,7 +234,7 @@ var ertmpd = angular.module('ertmpd', ['gettext'])
 					$scope.currentDownloads[i].style.panel_color = "success";
 					$scope.currentDownloads[i].style.label_color = "success";
 					$scope.currentDownloads[i].time_remaining = null;
-
+					$scope.$apply();
 				}
 			} 
 				
@@ -348,7 +348,7 @@ var ertmpd = angular.module('ertmpd', ['gettext'])
 			percent: "0",
 			percent_text: gettext("Connecting..."),
 			command: inputC,
-			orig: inputC.split(" ")[2],
+			orig: null,//inputC.split(" ")[2],
 			img: undefined,
 			moreinfo: false,
 			name: inputC.split(" ")[inputC.split(" ").length-1], // improve this
