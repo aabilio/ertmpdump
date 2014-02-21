@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html style="background-color: #3498db;" ng-app="ertmpd">
+  <head>
+    <meta charset="utf-8"> 
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/main.css">
+
+    <!-- jQuery is required by Bootstrap -->
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="static/js/bootstrap.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
+    <script type="text/javascript" src="static/js/socket.io.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/URI.js/1.11.2/URI.min.js"></script>
+    <script type="text/javascript" src="static/js/angular-gettext.min.js"></script>
+    <script type="text/javascript" src="static/js/app.js"></script>
+    <script type="text/javascript" src="static/js/translations.js"></script>
+    
+  </head>
+<body ng-controller="EasyRTMPDUMOController">
+  
+  <!-- Fixed navbar -->
+  <div class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-barcode"></span><b><span>  EASYRTMPDUMP</span></b></a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <div class="btn-group" style="margin-top: 5px;">
+              <button ng-click="wheretodownload_clicked_change_state()" type="button" class="btn btn-primary" ><b><span class="glyphicon glyphicon-question-sign"></span></b> {{ 'WHERE TO DOWNLOAD'|translate }}</button>
+              <button ng-click="disconnect()" type="button" class="btn btn-danger"><b><span class="glyphicon glyphicon-off"></span></b> {{ 'DISCONNECT'|translate }}</button>
+              <!-- ng-click="selectDownloadDir()" -->
+            </div>
+          </li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+
+  <div id="headerwrap">
+    <div class="container">
+
+      <div class="row centered" style="margin-top: 20px;">
+        <div class="col-lg-8 col-lg-offset-2">
+          <div class="panel panel-info">
+            <div class="panel-heading" translate><b>TYPE NEW COMMAND</b></div>
+            <textarea ng-model="commandInTextarea" class="form-control" id="commandTextarea" style="margin: 0px -0.2083333432674408px 0px 0px; width: 749px; height: 87px;" placeholder="rtmpdump -r rtmp://[...]"></textarea>
+            <div class="panel-footer" style="text-align: right;">
+              <button ng-click="addDownloadFromTextarea()" type="button" class="btn btn-info" translate>DOWNLOAD</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" style="margin-bottom: 20px;" ng-if="wheretodownload_clicked">
+        <div class="col-lg-8 col-lg-offset-2">
+          <div class="input-group input-group-lg" >
+            <span class="input-group-btn">
+              <button ng-click="selectDownloadDir()" class="btn btn-default" type="button" ><span class="glyphicon glyphicon-folder-open"></span></button>
+            </span>
+            <input ng-click="show_modalHowInfoChooseDir()" type="text" class="form-control" value="{{ dirpath }}">
+          </div><!-- /input-group -->
+          <!-- <h1 style="text-align: right;"><b>DOWNLOAD TO:</b> <span>{{ dirpath }}</span></h1> --> 
+        </div><!-- /col-lg-12 -->
+      </div><!-- /row -->
+
+      <div class="row centered" id="downloadSection" style="margin-top: 20px;">
+
+        <div ng-repeat="cd in currentDownloads track by $index" class="col-lg-8 col-lg-offset-2 downloadProgress" ng-if="currentDownloads.length">
+          <div class="panel panel-{{ cd.style.panel_color }}" >
+            <div ng-click="toggleMoreInfo(cd.id)" style="cursor: pointer;" class="panel-heading" data-toggle="tooltip" data-placement="top" title="{{ 'Click to show/hide additional info'|translate }}"><b>{{ cd.name }}</b></div>
+            <div ng-click="toggleMoreInfo(cd.id)" style="cursor: pointer;" class="panel-body" style="padding-bottom: 0;">
+              <div class="progress">
+                <div class="progress-bar progress-bar-{{ cd.style.progress_color }}" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: {{ cd.percent }}%">
+                <b style="font-size: 16px;">{{ cd.percent }}%</b>
+                </div>
+              </div>
+            </div>
+            <div ng-show="cd.img" class="panel-footer" style="text-align: right; padding: 0;">
+              <span class="label label-{{ cd.style.label_color }}" data-toggle="tooltip" data-placement="left" title="{{ 'Exact rtmpdump command output'|translate }}">{{ cd.percent_text }}</span>
+              <span ng-show="cd.time_remaining" class="label label-warning" translate>Time remaining: {{ cd.time_remaining }}</span>
+              <button ng-click="cancelDownload(cd.id)" type="button" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="bottom" title="{{ 'Cancel & remove download'|translate }}">
+                <span style="font-weight: bold;  font-size: 17px; margin-top: 4px;" class="glyphicon glyphicon-trash"></span>
+              </button>
+              <img src="{{ cd.img }}" alt="{{ cd.name }}" style="max-height: 44px;">
+            </div>
+            <div ng-show="cd.img == undefined" class="panel-footer" style="text-align: right;">
+              <span class="label label-{{ cd.style.label_color }}" data-toggle="tooltip" data-placement="left" title="{{ 'Exact rtmpdump command output'|translate }}">{{ cd.percent_text }}</span>
+              <span ng-show="cd.time_remaining" class="label label-warning" translate>Time remaining: {{ cd.time_remaining }}</span>
+              <button ng-click="cancelDownload(cd.id)" type="button" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="bottom" title="{{ 'Cancel & remove download'|translate }}">
+                <span style="font-weight: bold;  font-size: 17px; margin-top: 4px;" class="glyphicon glyphicon-trash"></span>
+              </button>
+            </div>
+            <div class="panel-footer" ng-if="cd.moreinfo">
+              <ul class="list-group">
+                <li class="list-group-item list-group-item-warning"><b>{{ 'Additional Information'|translate }}</b></li>
+
+                <li class="list-group-item" style="text-align: justified;">
+                  <span class="label label-primary" translate>{{ 'Download started at' }}</span> <span style="font-size: 12px; font-weight: bold;">{{ cd.time_start_ui }}</span>
+                </li>
+                <li class="list-group-item" style="text-align: justified;">
+                  <span class="label label-primary" translate>{{ 'Destination' }}</span> <span style="font-size: 12px; font-weight: bold;">{{ cd.destination }}</span>
+                </li>
+                <li class="list-group-item" style="text-align: justified;">
+                  <span class="label label-primary" translate>{{ 'Command' }}</span> <span style="font-size: 12px; font-weight: bold;">{{ cd.command }}</span>
+                </li>
+                <li class="list-group-item" style="text-align: justified;">
+                  <span class="label label-primary" translate>{{ 'Location' }}</span> <span style="font-size: 12px; font-weight: bold;"><a href="{{ cd.orig }}" target="_blank">{{ cd.orig }}</a></span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Cancel download confirm Modal -->
+          <div class="modal fade" id="modalCancelDownloadConfirm_{{ cd.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="nokb close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title" id="myModalLabel" translate>Are you sure that you want to cancel the download?</h4>
+                </div>
+                <div class="modal-body" translate>
+                  "{{ cd.name }}" is going to be cancelled
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="nokb btn btn-default" data-dismiss="modal" translate>Cancel</button>
+                  <button type="button" class="okb btn btn-primary" translate>Do it!</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+    </div><!-- /container -->
+  </div><!-- /headerwrap -->
+
+          
+
+
+  <!-- Info Close Modal -->
+  <div class="modal fade" id="modalInfoClose" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="nokb close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="myModalLabel" translate>Disconnect</h4>
+        </div>
+        <div class="modal-body" translate>
+          This window is going to be closed and the backend program is going to finish
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="nokb btn btn-default" data-dismiss="modal" translate>Cancel</button>
+          <button type="button" class="okb btn btn-primary" translate>Exit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Info Launch directory chooser Modal -->
+  <div class="modal fade" id="modalInfoChooseDir" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="nokb close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="myModalLabel" translate>Choose a folder on your hard disk to store the downloaded files</h4>
+        </div>
+        <div class="modal-body">
+          {{ 'A new program is going to be opened in your computer to select a folder on your hard disk (it can be late a few seconds).'| translate }}<br>{{ 'The downloads that already are in process will not meet affected by this change.'| translate }}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="nokb btn btn-default" data-dismiss="modal" translate>Cancel</button>
+          <button type="button" class="okb btn btn-primary" translate>Open</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Info How to Launch directory chooser Modal -->
+  <div class="modal fade" id="modalHowInfoChooseDir" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="nokb close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="myModalLabel" translate>To select a new folder...</h4>
+        </div>
+        <div class="modal-body" translate>
+          You have to do click in the icon of the folder that is to the left of the box that you have just selected. ;)
+        </div>
+        <div class="modal-footer">
+          <!--<button type="button" class="nokb btn btn-default" data-dismiss="modal">Cancel</button>-->
+          <button type="button" class="okb btn btn-primary" translate>OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Info not keepalive Modal -->
+  <div class="modal fade" id="modalInfoNotKeepAlive" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="nokb close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="myModalLabel" translate>CONNECTION PROBLEM</h4>
+        </div>
+        <div class="modal-body" translate>
+          It seems that the connection has got lost with backend program. The most probable thing is that the downloads have stopped working. This window is going to be closed and you will have to return to execute the program from your operating system. 
+        </div>
+        <div class="modal-footer">
+          <!--<button type="button" class="nokb btn btn-default" data-dismiss="modal">Cancel</button>-->
+          <button ng-click="disconnectFromKeppalive()" type="button" class="okb btn btn-primary" translate>OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<script>
+  $(window).load(function(){
+    $('*[data-toggle=tooltip]').tooltip();
+  });
+</script>
+<style>
+  .tooltip-inner {
+    font-weight: bold;
+  }
+</style>
+  
+  
+
+</body>
+</html>

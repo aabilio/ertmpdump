@@ -1,0 +1,22 @@
+{
+  "name": "Easy-rtmpdump",
+  "version": "0.0.1",
+  "description": "rtmpdump for dummies",
+  "main": "webview/static/js/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "keywords": [
+    "rtmpdump",
+    "for",
+    "dummies",
+    "easy"
+  ],
+  "author": "aabilio",
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-angular-gettext": "~0.2.8"
+  }
+}

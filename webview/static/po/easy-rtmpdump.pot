@@ -1,0 +1,132 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: easy-rtmpdump.html
+msgid "<b>TYPE NEW COMMAND</b>"
+msgstr ""
+
+#: easy-rtmpdump.html
+msgid "A new program is going to be opened in your computer to select a folder on your hard disk (it can be late a few seconds)."
+msgstr ""
+
+#: static/js/app.js
+msgid "A unknown error occurred"
+msgstr ""
+
+#: easy-rtmpdump.html
+msgid "Additional Information"
+msgstr ""
+
+#: easy-rtmpdump.html
+msgid "Are you sure that you want to cancel the download?"
+msgstr ""
+
+#: easy-rtmpdump.html
+msgid "CONNECTION PROBLEM"
+msgstr ""
+
+#: easy-rtmpdump.html
+msgid "Cancel"
+msgstr ""
+
+#: easy-rtmpdump.html
+msgid "Cancel & remove download"
+msgstr ""
+
+#: easy-rtmpdump.html
+msgid "Choose a folder on your hard disk to store the downloaded files"
+msgstr ""
+
+#: easy-rtmpdump.html
+msgid "Click to show/hide additional info"
+msgstr ""
+
+#: static/js/app.js
+msgid "Complete (100%)"
+msgstr ""
+
+#: static/js/app.js
+msgid "Connecting..."
+msgstr ""
+
+#: easy-rtmpdump.html
+msgid "DISCONNECT"
+msgstr ""
+
+#: easy-rtmpdump.html
+msgid "DOWNLOAD"
+msgstr ""
+
+#: easy-rtmpdump.html
+msgid "Disconnect"
+msgstr ""
+
+#: easy-rtmpdump.html
+msgid "Do it!"
+msgstr ""
+
+#: easy-rtmpdump.html
+msgid "Exact rtmpdump command output"
+msgstr ""
+
+#: easy-rtmpdump.html
+msgid "Exit"
+msgstr ""
+
+#: easy-rtmpdump.html
+msgid "It seems that the connection has got lost with backend program. The most probable thing is that the downloads have stopped working. This window is going to be closed and you will have to return to execute the program from your operating system."
+msgstr ""
+
+#: easy-rtmpdump.html
+msgid "OK"
+msgstr ""
+
+#: easy-rtmpdump.html
+msgid "Open"
+msgstr ""
+
+#: easy-rtmpdump.html
+msgid "The downloads that already are in process will not meet affected by this change."
+msgstr ""
+
+#: easy-rtmpdump.html
+msgid "This window is going to be closed and the backend program is going to finish"
+msgstr ""
+
+#: easy-rtmpdump.html
+msgid "Time remaining: {{ cd.time_remaining }}"
+msgstr ""
+
+#: easy-rtmpdump.html
+msgid "To select a new folder..."
+msgstr ""
+
+#: easy-rtmpdump.html
+msgid "WHERE TO DOWNLOAD"
+msgstr ""
+
+#: easy-rtmpdump.html
+msgid "You have to do click in the icon of the folder that is to the left of the box that you have just selected. ;)"
+msgstr ""
+
+#: easy-rtmpdump.html
+msgid "\"{{ cd.name }}\" is going to be cancelled"
+msgstr ""
+
+#: easy-rtmpdump.html
+msgid "{{ 'Command' }}"
+msgstr ""
+
+#: easy-rtmpdump.html
+msgid "{{ 'Destination' }}"
+msgstr ""
+
+#: easy-rtmpdump.html
+msgid "{{ 'Download started at' }}"
+msgstr ""
+
+#: easy-rtmpdump.html
+msgid "{{ 'Location' }}"
+msgstr ""

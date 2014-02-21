@@ -1,0 +1,4 @@
+
+EasyRtmpdump = {
+	isrunning: true,
+};

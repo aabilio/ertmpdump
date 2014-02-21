@@ -1,0 +1,4 @@
+2014-02-20 20:02:04,694 - __main__ - INFO - Listening on port 25431 and on port 843 (flash policy server)
+2014-02-20 20:02:10,681 - __main__ - INFO - New socket connection. Namespaces: {'': <class '__main__.EasyRtmpdumpNamespace'>}
+2014-02-20 20:02:10,803 - __main__ - INFO - Getting preferences: {'dirpath': '/Users/aabilio/Desktop'}
+2014-02-20 20:02:13,395 - __main__ - INFO - Ciao!

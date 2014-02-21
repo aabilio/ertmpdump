@@ -1,0 +1,161 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Easy-rtmpdump\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Abilio Almeida (aabilio) <aabilio@gmail.com>\n"
+"Language-Team: \n"
+"Language: es_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.4\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: easy-rtmpdump.html
+msgid "<b>TYPE NEW COMMAND</b>"
+msgstr "<b>INTRODUCE UN NUEVO COMANDO</b>"
+
+#: easy-rtmpdump.html
+msgid ""
+"A new program is going to be opened in your computer to select a folder on "
+"your hard disk (it can be late a few seconds)."
+msgstr ""
+"Un nuevo programa se va a ejecutar en tu ordenador para seleccionar una "
+"carpeta de descarga (puede tardar unos pocos segundos en abrirse)."
+
+#: static/js/app.js
+msgid "A unknown error occurred"
+msgstr "Se ha producido un error"
+
+#: easy-rtmpdump.html
+msgid "Additional Information"
+msgstr "Información Adicional"
+
+#: easy-rtmpdump.html
+msgid "Are you sure that you want to cancel the download?"
+msgstr "¿Estás seguro de que quieres cancelar la descarga?"
+
+#: easy-rtmpdump.html
+msgid "CONNECTION PROBLEM"
+msgstr "SE HA DETECTADO UN PROBLEMA EN LA CONEXIÓN"
+
+#: easy-rtmpdump.html
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: easy-rtmpdump.html
+msgid "Cancel & remove download"
+msgstr "Cancelar y borrar la descarga"
+
+#: easy-rtmpdump.html
+msgid "Choose a folder on your hard disk to store the downloaded files"
+msgstr "Elige una carpeta en tu disco duro para almacenar las descargas"
+
+#: easy-rtmpdump.html
+msgid "Click to show/hide additional info"
+msgstr "Haz clic para mostrar/ocultar información adicional"
+
+#: static/js/app.js
+msgid "Complete (100%)"
+msgstr "Descarga finalizada (100%)"
+
+#: static/js/app.js
+msgid "Connecting..."
+msgstr "Conectando..."
+
+#: easy-rtmpdump.html
+msgid "DISCONNECT"
+msgstr "DESCONECTAR"
+
+#: easy-rtmpdump.html
+msgid "DOWNLOAD"
+msgstr "DESCARGAR"
+
+#: easy-rtmpdump.html
+msgid "Disconnect"
+msgstr "Desconectar"
+
+#: easy-rtmpdump.html
+msgid "Do it!"
+msgstr "¡Sí!"
+
+#: easy-rtmpdump.html
+msgid "Exact rtmpdump command output"
+msgstr "Salida exacta del comando rtmpdump"
+
+#: easy-rtmpdump.html
+msgid "Exit"
+msgstr "Salir"
+
+#: easy-rtmpdump.html
+msgid ""
+"It seems that the connection has got lost with backend program. The most "
+"probable thing is that the downloads have stopped working. This window is "
+"going to be closed and you will have to return to execute the program from "
+"your operating system."
+msgstr ""
+"Parece que se ha perdido la conexión con el programa. Lo más probable es que "
+"las descargas hayan dejado de funcionar. Esta ventana se va a cerrar y "
+"tendrás que volver a ejecutar el programa desde tu sistema operativo."
+
+#: easy-rtmpdump.html
+msgid "OK"
+msgstr "OK"
+
+#: easy-rtmpdump.html
+msgid "Open"
+msgstr "Abrir"
+
+#: easy-rtmpdump.html
+msgid ""
+"The downloads that already are in process will not meet affected by this "
+"change."
+msgstr ""
+"Las descargas que ya se están realizando no se verán afectadas por este "
+"cambio."
+
+#: easy-rtmpdump.html
+msgid ""
+"This window is going to be closed and the backend program is going to finish"
+msgstr "Esta ventana se va a cerrar y el programa va a acabar su ejecución"
+
+#: easy-rtmpdump.html
+msgid "Time remaining: {{ cd.time_remaining }}"
+msgstr "Tiempo restante: {{ cd.time_remaining }}"
+
+#: easy-rtmpdump.html
+msgid "To select a new folder..."
+msgstr "Para seleccionar una nueva carpeta..."
+
+#: easy-rtmpdump.html
+msgid "WHERE TO DOWNLOAD"
+msgstr "¿DÓNDE DESCARGAR?"
+
+#: easy-rtmpdump.html
+msgid ""
+"You have to do click in the icon of the folder that is to the left of the "
+"box that you have just selected. ;)"
+msgstr ""
+"Tienes que hacer clic en el icono de la carpeta que se encuentra a la "
+"izquierda del campo de texto que acabas de seleccionar ;)"
+
+#: easy-rtmpdump.html
+msgid "\"{{ cd.name }}\" is going to be cancelled"
+msgstr "Se va a cancelar la descarga: \"{{ cd.name }}\""
+
+#: easy-rtmpdump.html
+msgid "{{ 'Command' }}"
+msgstr "{{ 'Comando' }}"
+
+#: easy-rtmpdump.html
+msgid "{{ 'Destination' }}"
+msgstr "{{ 'Destino' }}"
+
+#: easy-rtmpdump.html
+msgid "{{ 'Download started at' }}"
+msgstr "{{ 'La descarga comenzó' }}"
+
+#: easy-rtmpdump.html
+msgid "{{ 'Location' }}"
+msgstr "{{ 'Página web' }}"
